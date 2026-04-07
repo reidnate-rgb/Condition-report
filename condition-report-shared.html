@@ -618,8 +618,33 @@ for(let i=1;i<=8;i++) {
       s.markers[i].note.querySelector('.note-num').textContent = n;
     }
   }
+
+  // Expose clearSheet globally
+  window.clearSheet = function(){
+    if(!confirm('Clear all inputs, selections, and markers? This cannot be undone.')) return;
+    // Clear all text/date inputs
+    document.querySelectorAll('input[type=text], input[type=date]').forEach(function(el){ el.value=''; });
+    // Reset all selects to first option
+    document.querySelectorAll('select').forEach(function(el){ el.selectedIndex=0; });
+    // Clear all textareas
+    document.querySelectorAll('textarea').forEach(function(el){ el.value=''; });
+    // Remove all annotation markers from diagrams
+    document.querySelectorAll('.annotation-marker').forEach(function(el){ el.remove(); });
+    // Clear note entries
+    ['boat','trailer'].forEach(function(group){
+      var nc = document.getElementById(group+'-notes');
+      if(nc) nc.querySelectorAll('.note-entry').forEach(function(el){ el.remove(); });
+      var em = document.getElementById(group+'-notes-empty');
+      if(em) em.style.display='';
+      state[group].markers = [];
+      state[group].nextId = 1;
+    });
+  };
 })();
 </script>
-<button class="no-print" onclick="window.print()" style="position:fixed;bottom:24px;right:24px;z-index:9999;background:#C8963C;color:#fff;border:none;border-radius:6px;padding:12px 24px;font-family:Montserrat,Arial,sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,0.25);text-transform:uppercase;">Save as PDF</button>
+<div class="no-print" style="position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;gap:10px;">
+<button onclick="window.clearSheet()" style="background:#9E161A;color:#fff;border:none;border-radius:6px;padding:12px 24px;font-family:Montserrat,Arial,sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,0.25);text-transform:uppercase;">Clear Sheet</button>
+<button onclick="window.print()" style="background:#C8963C;color:#fff;border:none;border-radius:6px;padding:12px 24px;font-family:Montserrat,Arial,sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,0.25);text-transform:uppercase;">Save as PDF</button>
+</div>
 </body>
 </html>
