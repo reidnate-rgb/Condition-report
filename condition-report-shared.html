@@ -189,6 +189,7 @@
 
   @media print {
     body { background:white; }
+    .no-print { display:none !important; }
     .page { box-shadow:none; margin:0; padding:0.32in; }
     .diag-page { page-break-before:always; }
   }
@@ -476,5 +477,6 @@ for(let i=1;i<=8;i++) {
   mp.appendChild(tr);
 }
 </script>
+<button class="no-print" onclick="window.print()" style="position:fixed;bottom:24px;right:24px;z-index:9999;background:#C8963C;color:#fff;border:none;border-radius:6px;padding:12px 24px;font-family:Montserrat,Arial,sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,0.25);text-transform:uppercase;">Save as PDF</button>
 </body>
 </html>
